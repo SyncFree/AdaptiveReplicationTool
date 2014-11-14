@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-Style-Type" content="text/css">
+		<title>GUI Overview</title>
+	</head>
+	<body>
+		<a name=“GUI”></a>
+		<table border=0 width="100%">
+			<tr>
+				<td valign="middle"><h1><img alt="[SyncFree]" src="images/log.png" width="70" /> GUI</h1></td>
+				<td align="right"><a href="adpReplicaTool.html"><img alt="Front" src="images/frontEnabled.png" height="32" border="0" /></a><a href="introduction.html"><img alt="Previous" src="images/previousEnabled.png" height="32" border="0" /></a><a href="futureWork.html"><img alt="Next" src="images/nextEnabled.png" height="32" border="0" /></a><a href="futureWork.html"><img alt="End" src="images/endEnabled.png" height="32" border="0" /></a></td>
+			</tr>
+		</table>
+		<hr />
+
+		<p>The GUI shows the progess of the replication and the messages logged.</p>
+
+		<p>The tool is composed of two views:</p>
+		<table border=0>
+			<tr>
+				<td>-</td><td><a href="#MainView">Emulation View</a></td>
+			</tr>
+			<tr>
+				<td>-</td><td><a href="#LogView">Log View</a></td>
+			</tr>
+		</table>
+
+		
+		<a name="MainView"></a><h2>The Emulation View</h2>
+		<p>This view is located a the top of the GUI tool and display the DC, the data they hold and their state. Also the control to run tests if any is set.</p>
+
+		<p>A DC is represented with a cylinder image (this can be changed in the configuration file), with the name of the DC at the top and the value of the replica on that DC, if a replica exist in the DC. The cylinder image changes to give an indication of the existence of a replica and the replica strength in the DC.</p> 
+
+		<p>The tool already has an implementation of the proposed Adaptive Replication algorithm, called here Ant Modifier. Other algorithms may be implemented and run by specifying one in the configuration file.</p>
+
+		<p>The tool support two ways of running it:</p>
+		<table border=0>
+			<tr>
+				<td valign="top">-</td><td>By assigning to each DC a read and a write key respectively that when pressed will send an appropriate request to the that DC.</td>
+			</tr>
+			<tr>
+				<td valign="top">-</td><td> By setting tests in the configuration file, in which case the GUI will display a test control view with buttons for 'play', 'pause', 'next', and 'stop' the test, which are called here states. Also a st of test may be repeated for a number of times. The test will be started on the state specified in the configuration file.</td>
+			</tr>
+			<tr>
+				<td valign="top">-</td><td>Also an individual request may, in a test set, have associated with it an action (set a valid state) for an specific repetition index.</td>
+			</tr>
+		</table>
+		
+
+		<a name="LogView"></a><h2>The Log View</h2>
+		<p>This view is placed at the bottom of the GUI and it is composed of two sub-views. The log controls menu view that allows to close, clear, help which  provides simple test help, and filter the log view.</p>
+		
+		<p>The main log view shows the different log messages posted.</p>
+
+		<br />
+		<hr />
+		<table border=0 width="100%">
+			<tr>
+				<td valign="middle"><font size="1" color="grey">A tool from <b>SyncFree</b> project</font></td>
+				<td align="right"><a href="adpReplicaTool.html"><img alt="Front" src="images/frontEnabled.png" height="32" border="0" /></a><a href="introduction.html"><img alt="Previous" src="images/previousEnabled.png" height="32" border="0" /></a><a href="futureWork.html"><img alt="Next" src="images/nextEnabled.png" height="32" border="0" /></a><a href="futureWork.html"><img alt="End" src="images/endEnabled.png" height="32" border="0" /></a></td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-Style-Type" content="text/css">
+		<title>Introduction</title>
+	</head>
+	<body>
+		<a name=“introduction”></a>
+		<table border=0 width="100%">
+			<tr>
+				<td valign="middle"><h1><img alt="[SyncFree]" src="images/log.png" width="70" /> Introduction</h1></td>
+				<td align="right"><a href="adpReplicaTool.html"><img alt="Front" src="images/frontEnabled.png" height="32" border="0" /></a><a href="adpReplicaTool.html"><img alt="Previous" src="images/previousEnabled.png" height="32" border="0" /></a><a href="guiOverview.html"><img alt="Next" src="images/nextEnabled.png" height="32" border="0" /></a><a href="futureWork.html"><img alt="End" src="images/endEnabled.png" height="32" border="0" /></a></td>
+			</tr>
+		</table>
+		<hr />
+
+		<p>This tool for Adaptive Replication is a Java GUI tool that emulates as 
+		many Data Centres (DCs) as the have been set in the configuration file 
+		(XML file) and shows in which DC replicas are kept and their strength. 
+		The strength is an indication of how long the replica may be kept in a 
+		DC. The access of the data, when reading and writing it, affects the 
+		likelihood that the data will be replicated in the DC, if it is not 
+		already replicated in that DC, or removed from a DC with a replica.</p>
+		
+
+		<h2>Principles</h2>
+		<p>A common technique to reduce latency is the replication of data between 
+		different data centres in a system with multiple data centres distributed 
+		around the world, as shown in Figure 1.</p>
+		<table border=0 align="center">
+			<tr>
+				<td>
+					<img alt="Multiple data centres" src="images/multiDCs.png" width="600" height="285"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<p>Fig. 1. Mutiple data centres.</p>
+				</td>
+			</tr>
+		</table>
+
+		<p>But keeping multiple replicas is an expensive commodity given the 
+		increase in storage requirements and write operations as a write need to 
+		be propagated to all the other data centres with a replica. The data could 
+		be placed in only one data centre, in which case there is not any 
+		replication, or a copy could exist in all the available data centres, 
+		which it is known as full replication. Alternatively the data may be 
+		located in some but not necessarily all the data centres such that the 
+		number, location and data is determined at run time, which it is known 
+		as adaptive replication.</p>
+
+		<p>The replications may be grouped, base on its existence, into two types; 
+		<b>static replication</b> where a replica persist until it is deleted by
+		a user or its duration expires, and <b>dynamic replication</b> where the
+		creation and deletion of a replica are managed automatically and normally
+		directed by the access pattern of the data used by the users. In static
+		replication the major drawback is their inability to adapt to changes in
+		the access pattern of the data used by the users.</p>
+
+		<p>Also there are two types of replication based on their effect on the 
+		data; <b><a href="#patial_data_replication">partial data replication</a></b> 
+		is concerned with the number of parts 
+		the full data is composed of, all of which may be located in different 
+		parts of the overall system, i.e. data centres, within a data centre in 
+		different nodes or at the client-side, whereas 
+		<b><a href="#adaptive_georeplication">adaptive geo--replication</a></b> 
+		is concerned in what data and where the data or part of the data is 
+		located within the overall system of data centres and how many replicas 
+		exist simultaneously.</p>
+
+
+		<a name="patial_data_replication"></a><h3>Partial Data Replication</h3>
+		<p>It is concerned with the different parts of the data, and finding data 
+		types that allow breaking the data into smaller parts. It avoids 
+		replicating large data structures so helping to reduce the bandwidth and 
+		latency. The main principal is that not all the full data is always 
+		required, as shown in Figure 2. This introduces the need to find data 
+		structures which allow breaking the data into parts without loosing 
+		information, and maintaining the data integrity and required invariants.<p>
+		<table border=0 align="center">
+			<tr>
+				<td>
+					<img alt="Partial data" src="images/partialReplication.png" />
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<p>Example of Partial Replication of data between multiple data centres.<p>
+				</td>
+			</tr>
+		</table>
+
+		<p>This requires to define new Conflict-free Replicated Data Types (CRDTs) 
+		which allows splitting the data into different parts that may be placed 
+		in multiple data centres.</p>
+
+
+		<a name="adaptive_georeplication"></a><h3>Adaptive Geo-replication</h3>
+		<p>This is  also know as ``Adaptive Location of Replicas". In the example 
+		shown in Figure \ref{fig:adaptive_location_replicas} data reads/writes to 
+		data centres 1 and 2 make the data replica to move from data centre 3 to 
+		data centre 1 and 2 ensuring that the data is closer to where the reads 
+		and writes are requested based on the specified objectives and constraints.</p>
+		<table border=0 align="center">
+			<tr>
+				<td>
+					<img alt="Partial data" src="images/adaptiveReplication.png" />
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<p>Example of adaptive geo--replication between data centre.</p>
+				</td>
+			</tr>
+		</table>
+
+		<p>Adaptive Geo--replication is concerned with:</p>
+		<table border=0>
+			<tr>
+				<td valign="top"><u>Location</u>:</td>
+				<td>On which data cetre to place the replicas so it is
+					<p>- Improved the latency: reduce distance between user and replica,</p>
+					<p>- Improved the data transmission quality.</p>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top"><u>Selection</u>:</td>
+				<td>Which data to replicate.</td>
+			</tr>
+			<tr>
+				<td valign="top"><u>Number<u>:</td>
+				<td>How many replicas to have so it is
+					<p>- Reduced unnecessary replicas which </p>
+						<p> * Reduces storage consumption and<p>
+						<p> * Reduces required network bandwidth.</p>
+				</td>
+			</tr>
+		</table>
+		
+		<p>In general terms any read operation in a data centre reinforces the need 
+		for a replica of the data in such data centre, similarly but perhaps with 
+		a different degree it happens with the write operations. But write operations 
+		decrease the need for a replica of the data in the other data centres with 
+		replicas, so eventually these data centres will not have any replica of 
+		the data. Given that we do not want to keep replicas when there are not 
+		necessary replica strength will decay as time pass, but always making sure 
+		that the data is present (replicated) at least in a pre-set number of 
+		data centres. There is also a question about how the replication should 
+		decay as time pass, e.g. linear, exponential or arctangent.</p>
+
+		<br />
+		<hr />
+		<table border=0 width="100%">
+			<tr>
+				<td valign="middle"><font size="1" color="grey">A tool from <b>SyncFree</b> project</font></td>
+				<td align="right"><a href="adpReplicaTool.html"><img alt="Front" src="images/frontEnabled.png" height="32" border="0" /></a><a href="adpReplicaTool.html"><img alt="Previous" src="images/previousEnabled.png" height="32" border="0" /></a><a href="guiOverview.html"><img alt="Next" src="images/nextEnabled.png" height="32" border="0" /></a><a href="futureWork.html"><img alt="End" src="images/endEnabled.png" height="32" border="0" /></a></td>
+			</tr>
+		</table>
+	</body>
+</html>

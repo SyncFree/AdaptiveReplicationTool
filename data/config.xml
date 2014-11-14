@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration file for the Adaptive Replication tool -->
+<config>
+    <gui>
+        <log_view_level>fine</log_view_level>
+        <width>856</width>
+        <height>490</height>
+        <devider_loc>250</devider_loc>
+        <dc_id font="Serif" font_size="13" font_style="bold"/>
+        <dc_value font="Serif" font_size="12" font_style="plain"/>
+        <dc_img base_name="images/database-" height="64" width=""/>
+        <background_img>images/world</background_img>
+    </gui>
+    <default_alg class="com.syncfree.adaptreplica.algorithm.AntModified">
+        <args>
+            <arg name="readStrengthIncr">1.0</arg>
+            <arg name="writeStrengthIncr">1.0</arg>
+            <arg name="writeOtherDcStrengthDecay">0.5</arg>
+            <arg name="replicationThreshold">2.0</arg>
+            <arg name="timeDecay" time_msec="1000">0.5</arg>
+            <arg name="strengthLimit">11.0</arg>
+        </args>
+    </default_alg>
+    <default_dc>
+        <arg name="minNumReplicas">1</arg>
+    </default_dc>
+    <dcs>
+        <dc id="DC1">
+            <replicate>data1</replicate>
+            <algorithm>
+                <args>
+                    <arg name="strength">2</arg>
+                </args>
+            </algorithm>
+            <gui name="First" img="images/database-" x="-190" y="40">
+                <keys>
+                    <!-- Examples: -->
+	                <!-- "INSERT" => getKeyStroke(KeyEvent.VK_INSERT, 0); -->
+				    <!-- "control DELETE" => getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK); -->
+				    <!-- "alt shift X" => getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK); -->
+				    <!-- "alt shift released X" => getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK, true); -->
+				    <!--  "typed a" => getKeyStroke('a'); -->
+	                <key name="read">pressed 1</key>
+	                <key name="write">pressed Q</key>
+                </keys>
+            </gui>
+        </dc>
+        <dc id="DC2">
+            <gui name="Second" img="images/database-" x="-5" y="110">
+                <keys>
+                    <key name="read">pressed 2</key>
+                    <key name="write">pressed W</key>
+                </keys>
+            </gui>
+        </dc>
+        <dc id="DC3">
+            <gui name="Third" img="images/database-" x="160" y="40">
+                <keys>
+                    <key name="read">pressed 3</key>
+                    <key name="write">pressed D</key>
+                </keys>
+            </gui>
+        </dc>
+    </dcs>
+
+    <tests active="true" start="pause">
+        <test id="test-A" active="true">
+            <requests repeat="10">
+                <!-- offset_msec is the milliseconds from previous request -->
+                <!-- Attribute 'action' may be "play", "pause", "next" or "stop", if not valid it will not b executed -->
+                <!-- Attribute 'repeated' may be a number in [1, ..., requests.repeat]. Only useful if attribute 'action' is set -->
+                <request id="1000" type="read" offset_msec="1000" destination="DC2"></request>
+                <request id="1001" type="read" offset_msec="1000" destination="DC2"></request>
+                <request id="1002" type="read" offset_msec="100" destination="DC2"></request>
+                <request id="1003" type="read" offset_msec="200" destination="DC2"></request>
+                <request id="2001" type="write" offset_msec="1000" destination="DC2" data_type="int">1111</request>
+                <request id="2002" type="write" offset_msec="0" destination="DC2" data_type="int">1112</request>
+                <request id="2003" type="write" offset_msec="0" destination="DC2" data_type="int">1113</request>
+                <request id="2004" type="write" offset_msec="0" destination="DC2" data_type="int">1114</request>
+                <request id="3001" type="read" offset_msec="500" destination="DC2"></request>
+                <request id="3002" type="read" offset_msec="800" destination="DC2"></request>
+                <request id="3003" type="read" offset_msec="800" destination="DC3"></request>
+                <request id="3004" type="read" offset_msec="200" destination="DC2"></request>
+                <request id="3005" type="read" offset_msec="0" destination="DC3"></request>
+                <request id="3006" type="read" offset_msec="200" destination="DC2"></request>
+                <request id="3007" type="read" offset_msec="0" destination="DC3"></request>
+                <request id="4001" type="write" offset_msec="200" destination="DC1" data_type="int">1115</request>
+                <request id="4002" type="write" offset_msec="200" destination="DC1" data_type="int">1116</request>
+                <request id="4003" type="write" offset_msec="600" destination="DC1" data_type="int">1117</request>
+            </requests>
+        </test>
+    </tests>
+</config>
