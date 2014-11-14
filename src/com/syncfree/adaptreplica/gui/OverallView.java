@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -48,6 +49,7 @@ import com.aasco.gui.HelpDlg;
 import com.aasco.gui.LogGUIView;
 import com.aasco.gui.LogView;
 import com.aasco.util.ArgDef;
+import com.aasco.util.ImageManager;
 import com.aasco.util.ParamDef;
 import com.aasco.util.PropertyDef;
 import com.aasco.util.Verbose;
@@ -322,6 +324,8 @@ public class OverallView extends JFrame implements WindowListener, Action,
             }
         }
 
+        setIconImage();
+
         Verbose.finer("Leaving OverallView(Sring[])");
     } // Constructor ()
 
@@ -526,6 +530,16 @@ public class OverallView extends JFrame implements WindowListener, Action,
     public String toString() {
         return getID();
     } // toString()
+
+    /**
+     * Sets the default icon for the GUI.
+     */
+    private void setIconImage() {
+        final String strImgName = "images/logo.png";
+        final ImageIcon icon = ImageManager.buildImage(strImgName);
+        
+        setIconImage(icon.getImage());
+    } // setIconImage()
 
     /**
      * Builds the header for the help.
